@@ -1,12 +1,22 @@
 import random
+import re
+import argparse
 
 """
 Create the sample text and the dictionary to store word transitions
 
 TODO: Replace the sample text with a larger text for more interesting results
 """
-text = "Mary had a little lamb its fleece was white as snow"
-transitions = {}
+corpus_file = open("corpus.txt", 'r')
+read_corpus_file = corpus_file.read()
+print(read_corpus_file)
+
+text = read_corpus_file
+transitions = {
+    "comma":",",
+    "period":".",
+    "exclamation point":"!",
+}
 
 """
 Build the Markov Chain
@@ -17,13 +27,16 @@ Build the Markov Chain
 
 TODO: Handle punctuation and capitalization for better results
 """
-words = text.split()
+
+words = re.findall(r'[^\W_]+', text) 
+#text.split()
 for i in range(len(words) - 1):
     current_word = words[i]
     next_word = words[i + 1]
     if current_word not in transitions:
         transitions[current_word] = []
     transitions[current_word].append(next_word)
+print(transitions)
 
 """
 Generate new text using the Markov Chain, starting with a given word and
@@ -40,8 +53,9 @@ generating a specified number of words:
 TODO: Clean up the generated text for better formatting and readability,
 e.g., capitalization, punctuation, line breaks, etc.
 """
+
 def generate_text(start_word, num_words):
-    current_word = start_word
+    current_word = start_word.upper([0])
     result = [current_word]
     for _ in range(num_words - 1):
         if current_word in transitions:
@@ -50,11 +64,31 @@ def generate_text(start_word, num_words):
             current_word = next_word
         else:
             break
-    return " ".join(result)
+    return " ".join(result.append("."))
 
 """
 Example usage, generating 10 words starting with "Mary"
 
 TODO: Accept user input for the starting word and number of words to generate
 """
-print(generate_text("Mary", 10))
+
+def main():
+
+    # Description of the program
+    parser = argparse.ArgumentParser(description='Sentence generator from a selected corpus')
+    
+    # Adds two arguments that can be used to compare two files to crack password
+    parser.add_argument('num_words', help='The length of the output') 
+    parser.add_argument('start_word', help='Choose starting word')
+
+    args = parser.parse_args()
+
+    # Adds the two arguments defined to the password cracking function
+    arguments = generate_text(args.start_word, args.num_words)
+    
+    # Loops through the arguments in password cracking function and prints matching usernames and passwords
+    for x in arguments:
+        print(x)
+
+if __name__ == "__main__":
+    main()
