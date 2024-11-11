@@ -7,11 +7,19 @@ Create the sample text and the dictionary to store word transitions
 
 TODO: Replace the sample text with a larger text for more interesting results
 """
+
+# Opens file and makes it readable
 corpus_file = open("corpus.txt", 'r')
-read_corpus_file = corpus_file.read()
+# Sets x to user input, user chooses the word count
+x = int(input('word count: '))
+# Reads the file
+read_corpus_file = corpus_file.read(x)
+# Prints out requested amount of words from file 
 print(read_corpus_file)
 
+# Sets text variable
 text = read_corpus_file
+# Creates a dictionary for punctuation
 transitions = {
     "comma":",",
     "period":".",
