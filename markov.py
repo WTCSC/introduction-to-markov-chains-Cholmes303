@@ -11,9 +11,9 @@ TODO: Replace the sample text with a larger text for more interesting results
 # Opens file and makes it readable
 corpus_file = open("corpus.txt", 'r')
 # Sets x to user input, user chooses the word count
-x = int(input('word count: '))
+#x = int(input('word count: '))
 # Reads the file
-read_corpus_file = corpus_file.read(x)
+read_corpus_file = corpus_file.read(100)
 # Prints out requested amount of words from file 
 print(read_corpus_file)
 
@@ -63,7 +63,8 @@ e.g., capitalization, punctuation, line breaks, etc.
 """
 
 def generate_text(start_word, num_words):
-    current_word = start_word.upper([0])
+    num_words = int(num_words)
+    current_word = start_word.upper()
     result = [current_word]
     for _ in range(num_words - 1):
         if current_word in transitions:
@@ -72,7 +73,7 @@ def generate_text(start_word, num_words):
             current_word = next_word
         else:
             break
-    return " ".join(result.append("."))
+    return " ".join(result)
 
 """
 Example usage, generating 10 words starting with "Mary"
@@ -86,8 +87,8 @@ def main():
     parser = argparse.ArgumentParser(description='Sentence generator from a selected corpus')
     
     # Adds two arguments that can be used to compare two files to crack password
-    parser.add_argument('num_words', help='The length of the output') 
     parser.add_argument('start_word', help='Choose starting word')
+    parser.add_argument('num_words', help='The length of the output') 
 
     args = parser.parse_args()
 
