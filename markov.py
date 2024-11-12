@@ -1,12 +1,30 @@
 import random
+import argparse
 
 """
 Create the sample text and the dictionary to store word transitions
 
 TODO: Replace the sample text with a larger text for more interesting results
 """
-text = "Mary had a little lamb its fleece was white as snow"
-transitions = {}
+
+# Opens file and makes it readable.
+corpus_file = open("corpus.txt", 'r', encoding='utf8')
+
+# Reads the file.
+read_corpus_file = corpus_file.read()
+# Sets text variable.
+text = read_corpus_file
+
+# Creates a dictionary for punctuation and newline to remove newlines.
+transitions = {
+    "comma":",",
+    "period":".",
+    "exclamation point":"!",
+    "question mark":"?",
+    "semicolon":";",
+    "new line": "\n",
+    "apostrophy":"'",
+}
 
 """
 Build the Markov Chain
@@ -17,7 +35,11 @@ Build the Markov Chain
 
 TODO: Handle punctuation and capitalization for better results
 """
+
+# Sets words variable and splits text by spaces.
 words = text.split()
+
+# Loops through words to build the Markov chain, the word possibilities after each chosen word.
 for i in range(len(words) - 1):
     current_word = words[i]
     next_word = words[i + 1]
@@ -40,21 +62,43 @@ generating a specified number of words:
 TODO: Clean up the generated text for better formatting and readability,
 e.g., capitalization, punctuation, line breaks, etc.
 """
+
+# Function to generate text at a chosen starting word and amount of words.
 def generate_text(start_word, num_words):
     current_word = start_word
     result = [current_word]
-    for _ in range(num_words - 1):
+    for _ in range(num_words):
         if current_word in transitions:
             next_word = random.choice(transitions[current_word])
             result.append(next_word)
             current_word = next_word
         else:
             break
-    return " ".join(result)
+    return f"{' '.join(result)}."
 
 """
 Example usage, generating 10 words starting with "Mary"
 
 TODO: Accept user input for the starting word and number of words to generate
+
 """
-print(generate_text("Mary", 10))
+
+def main():
+
+    # Description of the program.
+    parser = argparse.ArgumentParser(description='Sentence generator from a selected corpus')
+    
+    # Adds two arguments that can be used to choose the starting word that is used and the number of words that is used.
+    parser.add_argument('start_word', help='Choose starting word', type=str)
+    parser.add_argument('num_words', help='The length of the output', type=int) 
+
+    args = parser.parse_args()
+
+    # Adds the two arguments defined to the text generating function.
+    arguments = generate_text(args.start_word, args.num_words)
+    
+    # Prints the generated text.
+    print(arguments)
+
+if __name__ == "__main__":
+    main()
