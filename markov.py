@@ -7,11 +7,19 @@ Create the sample text and the dictionary to store word transitions
 
 TODO: Replace the sample text with a larger text for more interesting results
 """
+
+# Opens file and makes it readable
 corpus_file = open("corpus.txt", 'r')
+# Sets x to user input, user chooses the word count
+#x = int(input('word count: '))
+# Reads the file
 read_corpus_file = corpus_file.read()
+# Prints out requested amount of words from file 
 print(read_corpus_file)
 
+# Sets text variable
 text = read_corpus_file
+# Creates a dictionary for punctuation
 transitions = {
     "comma":",",
     "period":".",
@@ -29,7 +37,7 @@ TODO: Handle punctuation and capitalization for better results
 """
 
 words = re.findall(r'[^\W_]+', text) 
-#text.split()
+text.split()
 for i in range(len(words) - 1):
     current_word = words[i]
     next_word = words[i + 1]
@@ -55,7 +63,7 @@ e.g., capitalization, punctuation, line breaks, etc.
 """
 
 def generate_text(start_word, num_words):
-    current_word = start_word.upper([0])
+    current_word = start_word.upper()
     result = [current_word]
     for _ in range(num_words - 1):
         if current_word in transitions:
@@ -64,22 +72,22 @@ def generate_text(start_word, num_words):
             current_word = next_word
         else:
             break
-    return " ".join(result.append("."))
+    return " ".join(result)
 
 """
 Example usage, generating 10 words starting with "Mary"
 
 TODO: Accept user input for the starting word and number of words to generate
-"""
 
+"""
 def main():
 
     # Description of the program
     parser = argparse.ArgumentParser(description='Sentence generator from a selected corpus')
     
     # Adds two arguments that can be used to compare two files to crack password
-    parser.add_argument('num_words', help='The length of the output') 
     parser.add_argument('start_word', help='Choose starting word')
+    parser.add_argument('num_words', help='The length of the output') 
 
     args = parser.parse_args()
 
