@@ -10,11 +10,7 @@ TODO: Replace the sample text with a larger text for more interesting results
 
 # Opens file and makes it readable
 corpus_file = open("corpus.txt", 'r')
-# Sets x to user input, user chooses the word count
-#x = int(input('word count: '))
-# Reads the file
 read_corpus_file = corpus_file.read()
-# Prints out requested amount of words from file 
 print(read_corpus_file)
 
 # Sets text variable
@@ -63,7 +59,7 @@ e.g., capitalization, punctuation, line breaks, etc.
 """
 
 def generate_text(start_word, num_words):
-    current_word = start_word.upper()
+    current_word = start_word.upper([0])
     result = [current_word]
     for _ in range(num_words - 1):
         if current_word in transitions:
